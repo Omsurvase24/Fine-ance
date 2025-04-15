@@ -2,11 +2,12 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { NavButton } from "./nav-button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetTitle, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useMedia } from "react-use";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const routes = [
     {
@@ -14,7 +15,7 @@ const routes = [
         label: "Overview",
     },
     {
-        href: "/transcations",
+        href: "/transactions",
         label: "Transactions",
     },
     {
@@ -28,7 +29,7 @@ const routes = [
     {
         href: "/settings",
         label: "Settings",
-    }
+    },
 ];
 
 export const Navigation = () => {
@@ -46,22 +47,23 @@ export const Navigation = () => {
     if (isMobile) {
         return (
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                <SheetTrigger>
+                <SheetTrigger asChild>
                     <Button variant="outline" size="sm" className="font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus-visible:ring-offset-0 focus-visible:ring-transparent outline-none text-white focus:bg-white/30 transtion">
                         <Menu className="size-4" />
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="px-2">
+                    <VisuallyHidden><SheetTitle className="flex flex-col gap-y-2 pt-6">Navigation</SheetTitle></VisuallyHidden>
                     <nav className="flex flex-col gap-y-2 pt-6">
                         {routes.map((route) => (
-                            <Button variant={route.href === pathname ? "secondary" : "ghost"} key={route.href} onClick={() => onClick(route.href)}>
+                            <Button variant={route.href === pathname ? "secondary" : "ghost"} key={route.href} onClick={() => onClick(route.href)} className="w-full justify-start">
                                 {route.label}
                             </Button>
                         ))}
                     </nav>
                 </SheetContent>
             </Sheet>
-        )
+        );
     }
 
     return (
