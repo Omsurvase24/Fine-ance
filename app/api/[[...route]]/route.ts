@@ -21,7 +21,15 @@ app
                 message: 'Hello Next.js!',
                 userId: auth.userId,
             })
-        });
+        })
+    .get(
+        '/test',
+        (c) => {
+            return c.json({
+                message: "hehe"
+            })
+        }
+    )
 
 export const GET = handle(app)
 export const POST = handle(app)
